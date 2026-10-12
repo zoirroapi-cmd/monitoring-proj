@@ -1,6 +1,8 @@
 import psutil
 import time
+
 from prometheus_client import Gauge, start_http_server
+from net_metrics import start_network_thread
 
 cpu_gauge = Gauge("mac_cpu_percent", "Загрузка CPU в процентах")
 mac_ram_percent = Gauge("mac_ram_percent", "Загрузка RAM")
@@ -18,6 +20,7 @@ def collect_metrics():
 start_http_server(9101)
 
 while True:
+    start_network_thread()
     result = collect_metrics()
     cpu_gauge.set(result["cpu_percent"])
     mac_ram_percent.set(result["ram_percent"])
