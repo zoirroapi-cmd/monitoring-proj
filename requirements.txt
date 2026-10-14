@@ -6,3 +6,5 @@ psutil==7.2.2
 Pygments==2.21.0
 pytest==9.1.1
 ruff==0.17.0
+send2trash
+send2trash
