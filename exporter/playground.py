@@ -1,8 +1,8 @@
-import psutil
 import time
 
-from prometheus_client import Gauge, start_http_server
+import psutil
 from net_metrics import start_network_thread
+from prometheus_client import Gauge, start_http_server
 
 cpu_gauge = Gauge("mac_cpu_percent", "Загрузка CPU в процентах")
 mac_ram_percent = Gauge("mac_ram_percent", "Загрузка RAM")

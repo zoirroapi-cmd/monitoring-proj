@@ -1,7 +1,7 @@
 import socket
 import ssl
-import time
 import subprocess
+import time
 
 
 def check_tcp(host, port=443):
@@ -54,7 +54,7 @@ def check_https(host, port=443, timeout=5):
     return result
 def get_vpn_services():
     out = subprocess.run(
-        ["scutil", "--nc", "list"], capture_output=True, text=True, timeout=5
+        ["scutil", "--nc", "list"], capture_output=True, text=True, timeout=5, check = False
     ).stdout
     services = {}
     for line in out.splitlines():
@@ -67,7 +67,7 @@ def get_vpn_services():
 
 def route_interface(ip="8.8.8.8"):
     out = subprocess.run(
-        ["route", "-n", "get", ip], capture_output=True, text=True, timeout=5
+        ["route", "-n", "get", ip], capture_output=True, text=True, timeout=5, check = False
     ).stdout
     for line in out.splitlines():
         line = line.strip()

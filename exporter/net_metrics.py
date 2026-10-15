@@ -2,9 +2,8 @@ import math
 import threading
 import time
 
-from prometheus_client import Gauge
-
 from net_check import check_https, get_vpn_services, route_interface
+from prometheus_client import Gauge
 
 TARGETS = ["ya.ru", "youtube.com"]
 STAGES = ["dns", "tcp", "tls", "http"]
@@ -51,8 +50,8 @@ def loop():
     while True:
         try:
             collect_once()
-        except Exception as e:
-            print("net check error:", e)
+        except Exception as e:   # noqa: BLE001
+            print(f"net check error: {e}")
         time.sleep(INTERVAL)
 
 
