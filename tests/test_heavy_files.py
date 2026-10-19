@@ -1,7 +1,8 @@
 import time
 from pathlib import Path
 
-from tools.heavy_files import human_size, old_files, top_heaviest
+from tools.common import human_size
+from tools.heavy_files import old_files, top_heaviest
 
 
 def test_human_size_bytes():

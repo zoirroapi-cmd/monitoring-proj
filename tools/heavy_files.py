@@ -3,6 +3,8 @@ from pathlib import Path
 
 from send2trash import send2trash
 
+from tools.common import human_size
+
 FOLDERS = ["~/Downloads", "~/Documents", "~/Desktop"]
 TOP_N = 5
 OLD_DAYS = 90
@@ -19,15 +21,6 @@ def list_files(folder):
         except OSError:
             continue
     return files
-
-
-def human_size(num_bytes):
-    for unit in ["Б", "КБ", "МБ", "ГБ"]:
-        if num_bytes < 1024:
-            return f"{num_bytes:.1f} {unit}"
-        num_bytes /= 1024
-    return f"{num_bytes:.1f} ТБ"
-
 
 def top_heaviest(files, n=TOP_N):
     return sorted(files, key=lambda f: f[1], reverse=True)[:n]
