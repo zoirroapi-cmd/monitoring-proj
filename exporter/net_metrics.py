@@ -9,20 +9,18 @@ TARGETS = ["ya.ru", "youtube.com"]
 STAGES = ["dns", "tcp", "tls", "http"]
 INTERVAL = 15
 
-vpn_connected = Gauge(
-    "mac_vpn_connected", "VPN service connected (1/0)", ["service"]
-)
+vpn_connected = Gauge("mac_vpn_connected", "VPN service connected (1/0)", ["service"])
 via_tunnel = Gauge(
     "mac_route_via_tunnel", "Internet traffic goes through a tunnel interface (1/0)"
 )
-check_ok = Gauge(
-    "mac_net_check_ok", "HTTPS check passed all stages (1/0)", ["target"]
-)
+check_ok = Gauge("mac_net_check_ok", "HTTPS check passed all stages (1/0)", ["target"])
 check_ms = Gauge(
     "mac_net_check_ms", "Time of each check stage in ms", ["target", "stage"]
 )
 check_failed = Gauge(
-    "mac_net_check_failed_stage", "1 if the check broke at this stage", ["target", "stage"]
+    "mac_net_check_failed_stage",
+    "1 if the check broke at this stage",
+    ["target", "stage"],
 )
 
 
@@ -50,7 +48,7 @@ def loop():
     while True:
         try:
             collect_once()
-        except Exception as e:   # noqa: BLE001
+        except Exception as e:  # noqa: BLE001
             print(f"net check error: {e}")
         time.sleep(INTERVAL)
 

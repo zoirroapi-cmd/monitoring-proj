@@ -42,7 +42,7 @@ def ask_and_remove(candidates):
         if answer == "q":
             break
         if answer in ("y", "yes", "д", "да"):
-            for target in (tags if tags else [image_id]):
+            for target in tags if tags else [image_id]:
                 try:
                     run(["docker", "rmi", target])
                     print(f"  -> удалён {target}")

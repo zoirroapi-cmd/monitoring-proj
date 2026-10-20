@@ -52,9 +52,15 @@ def check_https(host, port=443, timeout=5):
         if sock:
             sock.close()
     return result
+
+
 def get_vpn_services():
     out = subprocess.run(
-        ["scutil", "--nc", "list"], capture_output=True, text=True, timeout=5, check = False
+        ["scutil", "--nc", "list"],
+        capture_output=True,
+        text=True,
+        timeout=5,
+        check=False,
     ).stdout
     services = {}
     for line in out.splitlines():
@@ -67,13 +73,18 @@ def get_vpn_services():
 
 def route_interface(ip="8.8.8.8"):
     out = subprocess.run(
-        ["route", "-n", "get", ip], capture_output=True, text=True, timeout=5, check = False
+        ["route", "-n", "get", ip],
+        capture_output=True,
+        text=True,
+        timeout=5,
+        check=False,
     ).stdout
     for line in out.splitlines():
         line = line.strip()
         if line.startswith("interface:"):
             return line.split(":", 1)[1].strip()
     return None
+
 
 if __name__ == "__main__":
     print("VPN:", get_vpn_services())
