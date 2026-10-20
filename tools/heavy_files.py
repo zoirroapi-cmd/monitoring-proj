@@ -22,6 +22,7 @@ def list_files(folder):
             continue
     return files
 
+
 def top_heaviest(files, n=TOP_N):
     return sorted(files, key=lambda f: f[1], reverse=True)[:n]
 
@@ -33,6 +34,7 @@ def old_files(files, days=OLD_DAYS):
 
 def format_date(timestamp):
     return time.strftime("%Y-%m-%d", time.localtime(timestamp))
+
 
 def ask_and_trash(candidates):
     freed = 0
@@ -51,6 +53,7 @@ def ask_and_trash(candidates):
             print("  -> в Корзине")
     print(f"\nОтправлено в Корзину: {human_size(freed)}")
 
+
 if __name__ == "__main__":
     all_files = []
     for folder in FOLDERS:
@@ -64,7 +67,9 @@ if __name__ == "__main__":
 
     old = old_files(all_files)
     total_old = sum(f[1] for f in old)
-    print(f"\nНе менялись больше {OLD_DAYS} дней: {len(old)} шт., {human_size(total_old)}")
+    print(
+        f"\nНе менялись больше {OLD_DAYS} дней: {len(old)} шт., {human_size(total_old)}"
+    )
     print("Самые крупные из них:")
     for path, size, mtime in top_heaviest(old, 10):
         print(f"  {human_size(size):>10}  {format_date(mtime)}  {path}")

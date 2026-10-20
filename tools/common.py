@@ -4,5 +4,3 @@ def human_size(num_bytes):
             return f"{num_bytes:.1f} {unit}"
         num_bytes /= 1024
     return f"{num_bytes:.1f} ТБ"
-
-    
