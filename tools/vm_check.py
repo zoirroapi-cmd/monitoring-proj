@@ -3,16 +3,22 @@ import subprocess
 from tools.common import human_size
 
 
-def find_qemu():
-    out = subprocess.run(
+def run_ps():
+    result = subprocess.run(
         ["ps", "-axo", "pid=,rss=,etime=,comm="],
         capture_output=True,
         text=True,
         check=False,
         timeout=10,
-    ).stdout
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or "ps завершился с ошибкой")
+    return result.stdout
+
+
+def parse_ps(text):
     found = []
-    for line in out.splitlines():
+    for line in text.splitlines():
         parts = line.split(None, 3)
         if len(parts) < 4:
             continue
@@ -22,8 +28,16 @@ def find_qemu():
     return found
 
 
+def find_qemu():
+    return parse_ps(run_ps())
+
+
 if __name__ == "__main__":
-    vms = find_qemu()
+    try:
+        vms = find_qemu()
+    except RuntimeError as e:
+        print("Не удалось получить список процессов:", e)
+        raise SystemExit(1)
     if not vms:
         print("Запущенных qemu-виртуалок нет")
     else:
